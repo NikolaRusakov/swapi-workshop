@@ -3,14 +3,16 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start:server": "cd ./swapi-gql-rest/ && npm start",
-    "install:server": "cd ./swapi-gql-rest/ && npm i",
-    "start": "ng serve & npm run start:server",
+    "start:rest-server": "cd ./swapi-gql-rest/ && npm start",
+    "start:gql-server": "cd ./swapi-graphql/ && npm start",
+    "install:rest-server": "cd ./swapi-gql-rest/ && npm i",
+    "install:gql-server": "cd ./swapi-graphql/ && npm i",
+    "start": "ng serve & npm run start:rest-server & npm run start:gql-server",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "install:deps": "npm i & npm run install:server"
+    "install:deps": "npm i & npm run install:rest-server & npm run install:gql-server "
   },
   "private": true,
   "dependencies": {
