@@ -15,7 +15,7 @@
       <p>Hair color: {{detail.hairColor}}</p>
 
       <!--{{detail.filmConnection.films | json}}-->
-      <app-detail-panel *ngFor="let film of detail.films" [title]="film.title">
+      <app-detail-panel *ngFor="let film of detail.filmConnection.films" [title]="film.title">
         <p>Producer: {{film.producer}}</p>
         <p>Director: {{film.director}}</p>
         <p>episode ID: {{film.episodeId}}</p>
