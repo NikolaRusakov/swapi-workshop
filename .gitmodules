@@ -1,3 +1,6 @@
 [submodule "swapi-gql-rest"]
 	path = swapi-gql-rest
 	url = https://github.com/NikolaRusakov/swapi-gql-rest.git
+[submodule "src/app/components/swapi-graphql"]
+	path = src/app/components/swapi-graphql
+	url = https://github.com/NikolaRusakov/swapi-graphql.git
