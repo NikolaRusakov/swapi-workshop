@@ -5,7 +5,9 @@
 
 [GQL playground ](http://localhost:3000/graphql)
 
-[GQL server](https://github.com/NikolaRusakov/swapi-gql-rest)
+[REST server](https://github.com/NikolaRusakov/swapi-gql-rest)
+
+[GQL server](https://github.com/NikolaRusakov/swapi-graphql)
 
 [GQL client](https://github.com/NikolaRusakov/swapi-workshop)
 
@@ -44,4 +46,5 @@
   
   npm start
   ```
+ 
  
