@@ -3,11 +3,14 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start:server": "cd ./swapi-gql-rest/ && npm start",
+    "install:server": "cd ./swapi-gql-rest/ && npm i",
+    "start": "ng serve & npm run start:server",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "install:deps": "npm i & npm run install:server"
   },
   "private": true,
   "dependencies": {

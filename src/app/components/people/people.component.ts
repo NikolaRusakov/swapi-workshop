@@ -1,7 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {Apollo} from 'apollo-angular';
-import gql from 'graphql-tag';
-import {map} from 'rxjs/operators';
+import {map, withLatestFrom} from 'rxjs/operators';
+import keysToCamel from 'src/app/utils/converting-keys';
+import {swapiPeopleFilm} from '../../gql/fragments';
+import {GQL_NODE_QUERY, GQL_PERSON_FILM_QUERY, SWAPI_PEOPLE_FILM_QUERY, SWAPI_PEOPLE_ONLY_QUERY} from '../../gql/queries';
+import {MatDialog} from '@angular/material';
+import {DetailDialogComponent} from '../detail-dialog/detail-dialog.component';
 
 @Component({
   selector: 'app-people',
@@ -10,35 +14,39 @@ import {map} from 'rxjs/operators';
 })
 export class PeopleComponent implements OnInit {
 
-  details = this.apollo.watchQuery({
-    query: gql`
-      {
-        people {
-          url
-          homeworld
-          height
-          skin_color
-          birth_year
-          eye_color
-          hair_color
-          gender
-          name
-          mass
-          films {
-            producer
-            director
-            release_date
-            title
-            episode_id
-            opening_crawl
-          }
-        }
-      }
-    `
+  details =
+    this.apollo.use('extra').watchQuery({
+        query: GQL_PERSON_FILM_QUERY
+    // this.apollo.watchQuery({
+    // query: SWAPI_PEOPLE_FILM_QUERY
+  }).valueChanges.pipe(
     // @ts-ignore
-  }).valueChanges.pipe(map(value => value.data.people));
+    map(value => keysToCamel(value).data.allPeople.people));
 
-  constructor(private readonly apollo: Apollo) {
+  constructor(
+    private readonly apollo: Apollo,
+    private dialog: MatDialog,
+  ) {
+  }
+
+  openDetails(id: string): void {
+
+    this.apollo.use('extra').watchQuery({
+      query: GQL_NODE_QUERY,
+      variables: {
+        id
+      }
+    }).valueChanges.pipe(
+      // @ts-ignore
+      map(value => keysToCamel(value).data.people),
+      withLatestFrom(([, last]) => {
+          this.dialog.open(DetailDialogComponent, {
+            width: '250px',
+            data: {...last}
+          });
+        }
+      )
+    );
   }
 
   ngOnInit() {

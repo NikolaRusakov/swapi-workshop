@@ -25,39 +25,23 @@
 
 
 ### Start project
+
 - create workshop dir & pull repos 
   ```bash
   mkdir ~/workshop/
   
   cd ~/workshop/
-  
-  git clone https://github.com/NikolaRusakov/swapi-gql-rest.git server
-  
-  git clone https://github.com/NikolaRusakov/swapi-workshop.git client
+  git clone https://github.com/NikolaRusakov/swapi-workshop.git swapi
 
-  ```
+- install & start server/client
 
-- start server
   ```bash
-  cd server/
-   
-  npm i
+  webstorm ~/workshop/swapi/ 
+  
+  cd ~/workshop/swapi/
+  
+  npm run install:deps
   
   npm start
   ```
-
----
-
-**Open New Terminal**
-
----
-- start client
-  ```bash
-  webstorm ~/workshop/client/ 
-  
-  cd ~/workshop/client/
-  
-  npm i
-  
-  npm start
-  ```
+ 

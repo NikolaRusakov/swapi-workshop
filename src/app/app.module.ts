@@ -10,6 +10,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterModule} from '@angular/router';
 import {AppRoutingModule} from './app-routing.module';
 import {HttpClientModule} from '@angular/common/http';
+import {DetailDialogComponent} from './components/detail-dialog/detail-dialog.component';
+import {DetailDialogModule} from './components/detail-dialog/detail-dialog.module';
 
 @NgModule({
   declarations: [
@@ -23,22 +25,38 @@ import {HttpClientModule} from '@angular/common/http';
     AppRoutingModule,
     HttpLinkModule,
     ApolloModule,
+    DetailDialogModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  entryComponents: [DetailDialogComponent],
+  bootstrap: [AppComponent],
 })
 export class AppModule {
 
   constructor(private apollo: Apollo, private httpLink: HttpLink) {
-    const restLink = new RestLink({
+    const restURL = new RestLink({
       uri: 'https://swapi.co/api',
     });
 
+    const restLink = {
+      link: restURL,
+      cache: new InMemoryCache()
+    };
 
-    apollo.create({
-      // link: restLink,
+    const defaultLink = {
       link: httpLink.create({uri: 'http://localhost:3000/graphql'}),
       cache: new InMemoryCache()
-    });
+    };
+
+    const gqlLink = {
+      link: httpLink.create({uri: 'http://localhost:8888'}),
+      cache: new InMemoryCache(),
+    };
+
+    apollo.createDefault(defaultLink);
+
+    apollo.createNamed('extra', gqlLink);
+
+    apollo.createNamed('rest', restLink);
   }
 }
