@@ -1,9 +1,8 @@
 <ng-container *ngIf="(details| async) else showSpinner">
-
   <ng-container *ngFor="let detail of (details| async) ">
     <!--{{detail | json}}-->
     <app-detail-panel [title]="detail.name">
-      <button *ngIf="detail.id" mat-icon-button (click)="openDetails(detail.id)">
+      <button *ngIf="detail.id" mat-icon-button (click)="openDetails(detail.id,detail._Typename)">
         <mat-icon>info</mat-icon>
       </button>
       <p>Height: {{detail.height}}</p>

@@ -46,7 +46,7 @@ export const swapiPeopleFilm = {
 };
 
 export const gqlPerson = {
-  name: 'gqlPerson',
+  name: 'Person',
   entry: gql`
     fragment gqlPerson on Person{
       id
@@ -63,7 +63,7 @@ export const gqlPerson = {
 };
 
 export const gqlFilm = {
-  name: 'gqlFilm',
+  name: 'Film',
   entry: gql`
     fragment gqlFilm on Film{
       id
@@ -93,23 +93,21 @@ export const gqlPersonFilm = {
     ${gqlFilm.entry}
   `
 };
-export const gqlGetNode = (nodeDef) => ({
-  entry: gql`
-    fragment gqlGetNode on Node{
-      ${nodeDef.name}
-    }
-    ${nodeDef.entry}
-  `
-});
 
-/*fragment comparisonFields on Character {
-  name
-  friendsConnection(first: $first) {
-    totalCount
-    edges {
-      node {
-        name
+
+const lookupMap = [
+  gqlPerson,
+  gqlFilm
+];
+export const gqlGetNode = (typename: string) => {
+  const nodeDef = lookupMap.find(value => value.name === typename);
+  const nodeName = `gql${nodeDef.name}`;
+  return {
+    entry: gql`
+      fragment gqlGetNode on Node{
+        ...${nodeName}
       }
-    }
-  }
-}*/
+      ${nodeDef.entry}
+    `
+  };
+};

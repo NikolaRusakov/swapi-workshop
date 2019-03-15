@@ -1,5 +1,5 @@
 import gql from 'graphql-tag';
-import {swapiPeopleFilm, swapiPeople, gqlPersonFilm} from './fragments';
+import {swapiPeopleFilm, swapiPeople, gqlPersonFilm, gqlGetNode, gqlPerson} from './fragments';
 
 export const SWAPI_PEOPLE_FILM_QUERY = gql`
   {
@@ -10,16 +10,6 @@ export const SWAPI_PEOPLE_FILM_QUERY = gql`
   ${swapiPeopleFilm.entry}
 `;
 
-export const GQL_PERSON_FILM_QUERY = gql`
-  {
-    allPeople {
-      people{
-        ...gqlPersonFilm
-      }
-    }
-  }
-  ${gqlPersonFilm.entry}
-`;
 
 export const SWAPI_PEOPLE_ONLY_QUERY = gql`
   {
@@ -31,12 +21,29 @@ export const SWAPI_PEOPLE_ONLY_QUERY = gql`
 `;
 
 
-export const GQL_NODE_QUERY = gql`
-  query getNode($id: id){
-    node(id: $id){
-      ...swapiPeople
+export const GQL_PERSON_FILM_QUERY = gql`
+  {
+    allPeople {
+      people{
+        id
+        ...gqlPersonFilm
+      }
     }
   }
-  ${swapiPeople.entry}
+  ${gqlPersonFilm.entry}
 `;
+
+export const GQL_NODE_QUERY =
+  gql`
+    query node($id: ID!){
+      node(id: $id){
+        id
+        ...gqlPerson
+      }
+    }
+    ${gqlPerson.entry}
+  `/*,
+  variables: {id}
+}*/;
+
 

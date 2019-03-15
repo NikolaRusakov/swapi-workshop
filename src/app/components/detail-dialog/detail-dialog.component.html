@@ -1,7 +1,8 @@
-<p>
-{{data | json}}
-</p>
-
+<ng-container *ngIf="(data$ | async) as details">
+  <div *ngFor="let detail of details">
+    <p>{{detail[0]}} {{detail[1]}}</p>
+  </div>
+</ng-container>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Close</button>
 </div>

@@ -7,6 +7,7 @@ import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
   styleUrls: ['./detail-dialog.component.scss']
 })
 export class DetailDialogComponent {
+  data$ = this.data;
 
   constructor(
     private dialogRef: MatDialogRef<DetailDialogComponent>,
